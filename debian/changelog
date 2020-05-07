@@ -1,0 +1,5 @@
+moxa-it87-wdt-driver (5.2+1.0.0+deb10) buster; urgency=medium
+
+  * Initial release
+
+ -- Wayne W Wei <waynew.wei@moxa.com>  Wed, 06 May 2020 18:41:20 +0800
