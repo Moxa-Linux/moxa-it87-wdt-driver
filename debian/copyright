@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: moxa-it87-wdt-driver
-Source: http://gitlab.syssw.moxa.com/MXcore-Package/moxa-it87-wdt-driver
+Source: https://gitlab.com/moxa/ibg/software/platform/linux/sys-gitlab/mxcore-package/moxa-it87-wdt-driver
 
 Files:
  debian/*
