@@ -332,6 +332,7 @@ static int __init it87_wdt_init(void)
 	wdt_dev.timeout = timeout;
 	wdt_dev.max_timeout = max_units * 60;
 
+	watchdog_set_nowayout(&wdt_dev, nowayout);
 	watchdog_stop_on_reboot(&wdt_dev);
 	rc = watchdog_register_device(&wdt_dev);
 	if (rc) {
