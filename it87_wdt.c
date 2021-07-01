@@ -87,6 +87,7 @@ static unsigned int max_units, chip_type;
 static unsigned int timeout = DEFAULT_TIMEOUT;
 static int testmode = DEFAULT_TESTMODE;
 static bool nowayout = DEFAULT_NOWAYOUT;
+static unsigned short force_id;
 
 module_param(timeout, int, 0);
 MODULE_PARM_DESC(timeout, "Watchdog timeout in seconds, default="
@@ -97,6 +98,8 @@ MODULE_PARM_DESC(testmode, "Watchdog test mode (1 = no reboot), default="
 module_param(nowayout, bool, 0);
 MODULE_PARM_DESC(nowayout, "Watchdog cannot be stopped once started, default="
 		__MODULE_STRING(WATCHDOG_NOWAYOUT));
+module_param(force_id, ushort, 0);
+MODULE_PARM_DESC(force_id, "Override the detected device ID");
 
 /* Superio Chip */
 
@@ -267,7 +270,7 @@ static int __init it87_wdt_init(void)
 	if (rc)
 		return rc;
 
-	chip_type = superio_inw(CHIPID);
+	chip_type = force_id ? force_id : superio_inw(CHIPID);
 	chip_rev  = superio_inb(CHIPREV) & 0x0f;
 	superio_exit();
 
@@ -332,6 +335,7 @@ static int __init it87_wdt_init(void)
 	wdt_dev.timeout = timeout;
 	wdt_dev.max_timeout = max_units * 60;
 
+	watchdog_set_nowayout(&wdt_dev, nowayout);
 	watchdog_stop_on_reboot(&wdt_dev);
 	rc = watchdog_register_device(&wdt_dev);
 	if (rc) {
@@ -356,3 +360,4 @@ module_exit(it87_wdt_exit);
 MODULE_AUTHOR("Oliver Schuster");
 MODULE_DESCRIPTION("Hardware Watchdog Device Driver for IT87xx EC-LPC I/O");
 MODULE_LICENSE("GPL");
+MODULE_VERSION("1.3.0");
