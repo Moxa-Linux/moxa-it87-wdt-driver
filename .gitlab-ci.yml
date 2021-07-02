@@ -17,9 +17,9 @@ develop-build_deb:
     - Runner-Buster
   stage: develop-build_deb
   only:
-    - /^buster/.*$/i
+    - /^5.2/buster/.*$/i
   except:
-    - buster/master
+    - 5.2/buster/master
   before_script:
     - echo "deb http://ibg-linux-apt.moxa.com:8080/mirror-buster/Debian10.9_20210328 buster main" > /etc/apt/sources.list
     - curl -fsSL http://ibg-linux-apt.moxa.com:8080/ibg-linux-apt.gpg | apt-key add -
@@ -48,7 +48,7 @@ release-build_mod:
   stage: release-build_mod
   only:
     refs:
-      - buster/master
+      - 5.2/buster/master
   before_script:
     - echo "deb http://ibg-linux-apt.moxa.com:8080/mirror-buster/Debian10.9_20210328 buster main" > /etc/apt/sources.list
     - curl -fsSL http://ibg-linux-apt.moxa.com:8080/ibg-linux-apt.gpg | apt-key add -
@@ -74,7 +74,7 @@ trigger-sign_mod:
   stage: trigger-sign_mod
   only:
     refs:
-      - buster/master
+      - 5.2/buster/master
   variables:
     SIGNSV_PROJECT_NAME: $SIGNSV_PROJECT_NAME
     SIGNSV_TARGET: $SIGNSV_TARGET
@@ -94,7 +94,7 @@ release-build_mod_debs:
   stage: release-build_mod_debs
   only:
     refs:
-      - buster/master
+      - 5.2/buster/master
   needs:
     - job: release-build_mod
     - job: trigger-sign_mod
@@ -132,7 +132,7 @@ release-ready_to_upload:
   stage: release-ready_to_upload
   only:
     refs:
-      - buster/master
+      - 5.2/buster/master
   needs:
     - job: release-build_mod
     - job: trigger-sign_mod
